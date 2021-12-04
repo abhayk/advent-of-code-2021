@@ -36,8 +36,8 @@ fn part2(input: &str) -> Result<u32> {
     let o2_rating_str = get_rating(input, retain_marker_for_o2_rating)?;
     let co2_rating_str = get_rating(input, retain_marker_for_co2_rating)?;
 
-    let o2_rating = u32::from_str_radix(&o2_rating_str, 2)?;
-    let co2_rating = u32::from_str_radix(&co2_rating_str, 2)?;
+    let o2_rating = u32::from_str_radix(o2_rating_str, 2)?;
+    let co2_rating = u32::from_str_radix(co2_rating_str, 2)?;
 
     Ok(o2_rating * co2_rating)
 }
