@@ -4,28 +4,26 @@ use std::{cmp::Ordering, collections::HashMap, fs};
 
 #[derive(Debug, PartialEq, Eq, Hash)]
 struct Point {
-    x: u32,
-    y: u32,
+    x: i32,
+    y: i32,
 }
 
 fn generate_points_in_line(a: &Point, b: &Point) -> Vec<Point> {
     let mut points: Vec<Point> = Vec::new();
-
     let mut x = a.x;
     let mut y = a.y;
-    let dx = get_step(a.x, b.x);
-    let dy = get_step(a.y, b.y);
+    let dx = get_step(a.x, b.x) as i32;
+    let dy = get_step(a.y, b.y) as i32;
     while x != b.x || y != b.y {
         points.push(Point { x, y });
-        x = x.wrapping_add(dx as u32);
-        y = y.wrapping_add(dy as u32);
+        x += dx;
+        y += dy;
     }
     points.push(Point { x: b.x, y: b.y });
-
     points
 }
 
-fn get_step(m: u32, target: u32) -> i8 {
+fn get_step(m: i32, target: i32) -> i8 {
     match m.cmp(&target) {
         Ordering::Less => 1,
         Ordering::Greater => -1,
@@ -34,7 +32,7 @@ fn get_step(m: u32, target: u32) -> i8 {
 }
 
 fn parse_input(input: &str, format: &Regex) -> Result<(Point, Point)> {
-    let items: Vec<u32> = format
+    let items: Vec<i32> = format
         .captures(input)
         .ok_or(anyhow::anyhow!("Error during captures"))?
         .iter()
