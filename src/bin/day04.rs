@@ -122,6 +122,7 @@ fn get_winning_scores(input: &str) -> Result<Vec<u32>> {
                     }
                     None
                 })
+                // flatten here unwraps the options and skips none values
                 .flatten()
                 .collect::<Vec<u32>>()
         })
