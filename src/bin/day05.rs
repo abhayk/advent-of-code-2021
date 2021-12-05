@@ -2,7 +2,7 @@ use anyhow::Result;
 use regex::Regex;
 use std::{cmp::Ordering, collections::HashMap, fs};
 
-#[derive(Debug, PartialEq, Eq, Hash, Clone)]
+#[derive(Debug, PartialEq, Eq, Hash)]
 struct Point {
     x: u32,
     y: u32,
