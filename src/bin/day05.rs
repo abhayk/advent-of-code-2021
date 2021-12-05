@@ -13,21 +13,23 @@ fn generate_points_in_line(a: &Point, b: &Point) -> Vec<Point> {
 
     let mut x = a.x;
     let mut y = a.y;
+    let dx = get_step(a.x, b.x);
+    let dy = get_step(a.y, b.y);
     while x != b.x || y != b.y {
         points.push(Point { x, y });
-        x = get_next(x, b.x);
-        y = get_next(y, b.y);
+        x = x.wrapping_add(dx as u32);
+        y = y.wrapping_add(dy as u32);
     }
     points.push(Point { x: b.x, y: b.y });
 
     points
 }
 
-fn get_next(m: u32, target: u32) -> u32 {
+fn get_step(m: u32, target: u32) -> i8 {
     match m.cmp(&target) {
-        Ordering::Less => m + 1,
-        Ordering::Greater => m - 1,
-        _ => m,
+        Ordering::Less => 1,
+        Ordering::Greater => -1,
+        Ordering::Equal => 0,
     }
 }
 
