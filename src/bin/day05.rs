@@ -8,6 +8,12 @@ struct Point {
     y: i32,
 }
 
+impl Point {
+    fn new(x: i32, y: i32) -> Point {
+        Point { x, y }
+    }
+}
+
 fn generate_points_in_line(a: &Point, b: &Point) -> Vec<Point> {
     let mut points: Vec<Point> = Vec::new();
     let mut x = a.x;
@@ -15,11 +21,11 @@ fn generate_points_in_line(a: &Point, b: &Point) -> Vec<Point> {
     let dx = get_step(a.x, b.x) as i32;
     let dy = get_step(a.y, b.y) as i32;
     while x != b.x || y != b.y {
-        points.push(Point { x, y });
+        points.push(Point::new(x, y));
         x += dx;
         y += dy;
     }
-    points.push(Point { x: b.x, y: b.y });
+    points.push(Point::new(b.x, b.y));
     points
 }
 
@@ -41,14 +47,8 @@ fn parse_input(input: &str, format: &Regex) -> Result<(Point, Point)> {
         .map(|item| item.as_str().parse())
         .collect::<Result<_, _>>()?;
     Ok((
-        Point {
-            x: items[0],
-            y: items[1],
-        },
-        Point {
-            x: items[2],
-            y: items[3],
-        },
+        Point::new(items[0], items[1]),
+        Point::new(items[2], items[3]),
     ))
 }
 
