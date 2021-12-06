@@ -22,8 +22,8 @@ fn simulate(input: &str, days: u32) -> Result<u64> {
     }
     for _ in 0..days {
         let zeros = counts[0];
-        for j in 0..8 {
-            counts[j] = counts[j + 1];
+        for age in 0..8 {
+            counts[age] = counts[age + 1];
         }
         counts[6] += zeros;
         counts[8] = zeros;
