@@ -31,6 +31,7 @@ fn simulate(input: &str, days: u32) -> Result<u64> {
     Ok(counts.iter().sum())
 }
 
+#[cfg(test)]
 mod day06_tests {
     use crate::simulate;
 
