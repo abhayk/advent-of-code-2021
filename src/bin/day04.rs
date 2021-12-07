@@ -93,19 +93,19 @@ impl Board {
 fn get_winning_scores(input: &str) -> Result<Vec<u32>> {
     let mut iter = input.lines();
 
-    let draws: Vec<u32> = iter
+    let draws = iter
         .next()
         .ok_or(anyhow::anyhow!("Invalid input"))?
         .split(',')
-        .map(|s| s.parse())
-        .collect::<Result<_, _>>()?;
+        .map(|s| s.parse::<u32>())
+        .collect::<Result<Vec<u32>, _>>()?;
 
-    let mut boards: Vec<Board> = iter
+    let mut boards = iter
         .filter(|line| !line.trim().is_empty())
         .collect::<Vec<&str>>()
         .chunks(5)
         .map(|window| Board::init(window.to_vec(), 5))
-        .collect::<Result<_, _>>()?;
+        .collect::<Result<Vec<Board>>>()?;
 
     let winning_scores = draws
         .iter()

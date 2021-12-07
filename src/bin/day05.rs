@@ -38,14 +38,14 @@ fn get_step(m: i32, target: i32) -> i8 {
 }
 
 fn parse_input(input: &str, format: &Regex) -> Result<(Point, Point)> {
-    let items: Vec<i32> = format
+    let items = format
         .captures(input)
         .ok_or(anyhow::anyhow!("Error during captures"))?
         .iter()
         .skip(1)
         .flatten()
         .map(|item| item.as_str().parse())
-        .collect::<Result<_, _>>()?;
+        .collect::<Result<Vec<i32>, _>>()?;
     Ok((
         Point::new(items[0], items[1]),
         Point::new(items[2], items[3]),
@@ -55,10 +55,10 @@ fn parse_input(input: &str, format: &Regex) -> Result<(Point, Point)> {
 fn calculate_overlap_count(input: &str, include_diagonals: bool) -> Result<usize> {
     let format = Regex::new(r"(\d*),(\d*) -> (\d*),(\d*)")?;
 
-    let input: Vec<(Point, Point)> = input
+    let input = input
         .lines()
         .map(|line| parse_input(line, &format))
-        .collect::<Result<_, _>>()?;
+        .collect::<Result<Vec<(Point, Point)>>>()?;
 
     let overlap_counts = input
         .iter()
@@ -70,7 +70,7 @@ fn calculate_overlap_count(input: &str, include_diagonals: bool) -> Result<usize
             acc
         });
 
-    Ok(overlap_counts.iter().filter(|entry| *entry.1 >= 2).count())
+    Ok(overlap_counts.iter().filter(|entry| *entry.1 > 1).count())
 }
 
 fn main() -> Result<()> {

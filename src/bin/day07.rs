@@ -18,7 +18,7 @@ fn parse_input(input: &str) -> Result<Vec<i32>> {
                 anyhow::anyhow!("Error parsing input `{}` - {}", pos, err.to_string())
             })
         })
-        .collect::<Result<_, _>>()
+        .collect::<Result<Vec<i32>, _>>()
 }
 
 fn part1(input: &str) -> Result<i32> {

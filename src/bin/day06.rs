@@ -10,10 +10,10 @@ fn main() -> Result<()> {
 }
 
 fn simulate(input: &str, days: u32) -> Result<u64> {
-    let input: Vec<usize> = input
+    let input = input
         .split(',')
         .map(|s| s.parse())
-        .collect::<Result<_, _>>()?;
+        .collect::<Result<Vec<usize>, _>>()?;
 
     let mut counts: Vec<u64> = vec![0; 9];
 

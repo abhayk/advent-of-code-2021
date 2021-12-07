@@ -3,22 +3,14 @@ use std::fs;
 use anyhow::Result;
 
 fn main() -> Result<()> {
-    let input: Vec<u32> = fs::read_to_string("input/day01.txt")?
+    let input = fs::read_to_string("input/day01.txt")?
         .lines()
-        .map(|s| s.parse())
-        .collect::<Result<_, _>>()?;
+        .map(|s| s.parse::<u32>())
+        .collect::<Result<Vec<u32>, _>>()?;
 
-    println!("{}", part1(&input));
-    println!("{}", part2(&input));
+    println!("{}", count_increases_in_window(&input, 1));
+    println!("{}", count_increases_in_window(&input, 3));
     Ok(())
-}
-
-fn part1(input: &[u32]) -> u32 {
-    count_increases_in_window(input, 1)
-}
-
-fn part2(input: &[u32]) -> u32 {
-    count_increases_in_window(input, 3)
 }
 
 fn count_increases_in_window(input: &[u32], window_size: usize) -> u32 {
@@ -33,19 +25,19 @@ fn count_increases_in_window(input: &[u32], window_size: usize) -> u32 {
 
 #[cfg(test)]
 mod day01_tests {
-    use crate::{part1, part2};
+    use crate::count_increases_in_window;
 
-    fn test_input() -> Vec<u32> {
+    fn get_test_input() -> Vec<u32> {
         vec![199, 200, 208, 210, 200, 207, 240, 269, 260, 263]
     }
 
     #[test]
     fn test_part1() {
-        assert_eq!(part1(&test_input()), 7);
+        assert_eq!(count_increases_in_window(&get_test_input(), 1), 7);
     }
 
     #[test]
     fn test_part2() {
-        assert_eq!(part2(&test_input()), 5);
+        assert_eq!(count_increases_in_window(&get_test_input(), 3), 5);
     }
 }
