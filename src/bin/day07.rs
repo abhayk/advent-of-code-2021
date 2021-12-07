@@ -1,4 +1,4 @@
-use std::fs;
+use std::{fs, num::ParseIntError};
 
 use anyhow::Result;
 
@@ -13,7 +13,11 @@ fn main() -> Result<()> {
 fn parse_input(input: &str) -> Result<Vec<i32>> {
     input
         .split(',')
-        .map(|pos| pos.parse().map_err(|_err| anyhow::anyhow!("err")))
+        .map(|pos| {
+            pos.parse().map_err(|err: ParseIntError| {
+                anyhow::anyhow!("Error parsing input `{}` - {}", pos, err.to_string())
+            })
+        })
         .collect::<Result<_, _>>()
 }
 
