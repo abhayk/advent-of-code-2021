@@ -57,30 +57,30 @@ fn part2(input: &str) -> Result<u32> {
                 acc
             });
 
-        let mut segments = HashMap::new();
-
         // b,e,f can be identified since their counts are unique
         let b = *counts.iter().find(|entry| *entry.1 == 6).unwrap().0;
-        segments.insert('b', b);
         let e = *counts.iter().find(|entry| *entry.1 == 4).unwrap().0;
-        segments.insert('e', e);
         let f = *counts.iter().find(|entry| *entry.1 == 9).unwrap().0;
-        segments.insert('f', f);
 
         // c can be identified from 1 (cf) once f is identified
         let c = filter_pattern(&patterns, 2, vec![f]);
-        segments.insert('c', c);
 
         // a can be identified from 7 (acf) once c and f are identified
         let a = filter_pattern(&patterns, 3, vec![c, f]);
-        segments.insert('a', a);
 
         // d can be identified from 4 (bcdf) once b, c, f are identified
         let d = filter_pattern(&patterns, 4, vec![b, c, f]);
-        segments.insert('d', d);
 
         // g is the last letter. hence the one not equal to any of the other letters.
         let g = filter_pattern(&patterns, 7, vec![a, b, c, d, e, f]);
+
+        let mut segments = HashMap::new();
+        segments.insert('a', a);
+        segments.insert('b', b);
+        segments.insert('c', c);
+        segments.insert('d', d);
+        segments.insert('e', e);
+        segments.insert('f', f);
         segments.insert('g', g);
 
         // generate the modified segments for each number
