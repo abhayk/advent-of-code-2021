@@ -21,6 +21,7 @@ fn part1(input: &str) -> Result<u32> {
     Ok(result as u32)
 }
 
+#[allow(clippy::many_single_char_names)]
 fn part2(input: &str) -> Result<u32> {
     let mut sum = 0;
     for line in input.lines() {
