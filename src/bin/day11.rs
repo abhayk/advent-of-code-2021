@@ -18,12 +18,12 @@ fn part1(input: &str, steps: u32) -> u32 {
 fn part2(input: &str) -> u32 {
     let mut grid = parse_input(input);
     let target_flash_count = (grid.max_x() * grid.max_y()) as u32;
-    let mut counter = 1;
+    let mut counter = 0;
 
     while simulate(&mut grid) != target_flash_count {
         counter += 1;
     }
-    counter
+    counter + 1
 }
 
 fn simulate(grid: &mut Grid) -> u32 {
@@ -34,10 +34,10 @@ fn simulate(grid: &mut Grid) -> u32 {
             grid.cells[i][j] += 1;
         }
     }
-    let mut flashed = true;
     let mut flashed_octos = HashSet::new();
-    while flashed {
-        flashed = false;
+
+    loop {
+        let mut flashed = false;
         for i in 0..grid.max_x() {
             for j in 0..grid.max_y() {
                 if grid.cells[i][j] > 9 && !flashed_octos.contains(&(i, j)) {
@@ -49,6 +49,9 @@ fn simulate(grid: &mut Grid) -> u32 {
                     }
                 }
             }
+        }
+        if !flashed {
+            break;
         }
     }
     for (x, y) in flashed_octos {
